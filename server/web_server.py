@@ -81,7 +81,7 @@ class Server:
 
 
 
-    def run_server(self,PORT=5000):
+    def run_server(self,PORT=5000,HOST="0.0.0.0"):
         print(PORT)
-        httpd=SocketServer.TCPServer(("localhost", PORT), self.handler)
+        httpd=SocketServer.TCPServer((HOST, PORT), self.handler)
         httpd.serve_forever()
