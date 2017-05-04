@@ -11,10 +11,8 @@ import json
 
 
 
-twitter=Twitter('P3BGrlY3uKzwhqU7XDWRmDKpZ',
-            'J4EykDvFHi6DVVRzwdJRX95z6YZCKGXxTkDbR3048vJpnEmLiP',
-            '1026811693-fhGTpNENexbs8MrFSycrKX2ti8SNfbhynG29Ii7',
-            'tfO1t2ePcG45GqCmDYsn6vIXOwwLgRODze5NMTEyItpNE')
+twitter=Twitter(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_TOKEN,
+              ACCESS_TOKEN_SECRET)
 
 
 
@@ -26,30 +24,35 @@ def main():
 
 @router('/cutserv')
 def hashtag():
+    '''returns tweets with hashtag #cutserv'''
     return json.dumps(twitter.tweet_search('#cutserv'))
 
 
 
 @router('/cutserv/text')
 def hashtag_text():
+    '''returns just the text of tweets with hashtag #cutserv'''
     return json.dumps([tweet_text['text'] for tweet_text in twitter.tweet_search('#cutserv')])
 
 
 
 @router('/popular_tweets')
 def popular_tweets():
+    '''returns tweets with atleast a single retweet'''
     return json.dumps(twitter.get_tweets())
 
 
 
 @router('/popular_tweets/text')
 def popular_tweets_text():
+    '''returns text of tweets with atleast a singel retweet'''
     return json.dumps([tweet_text['text'] for tweet_text in twitter.get_tweets()])
 
 
 
 @router('/')
 def index():
+    '''a summar of the entire application '''
     return '''open /popular_tweets for complete tweet information of tweets with like greater than 1 , /popular_tweets/text for text of tweets with like greater than 1 ,/cutserv for complete tweet info of tweets with hashtag cutserv, and /cutserv/text for tweets with hashtag cutserv'''
 
 
