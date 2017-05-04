@@ -5,16 +5,24 @@ This project can perform the following functionality.
 
   - On opening route /cutserv , all tweets with #cutserv will be visible along with their other twitter data
   - On opening route /popular_tweets , all tweets fetched from timeline and having atleast a single retweet would be displayed
+  - On opening route /cutserv/text , all tweets with #cutserv will be visible
+  - On opening route /popular_tweets/text , all tweets with #cutserv will be visible
+  - **Note** - This is a json endpoint with content-type json . To enable other content-type , server.Handler.response_handler(response_type="") for sending html documents. 
 
 
 ### Installation
 
 This app requires [python](https://www.python.org/downloads/) v2.7 .
 
-Install the dependencies and devDependencies and start the server.
+Install the dependencies and start the server.
 
 ```sh
 pip install -r requirements.txt
+```
+
+To view the requirements
+```sh
+Your_favourite_text_editor requirements.txt
 ```
 
 After installation finishes,run the main.py file

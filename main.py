@@ -30,15 +30,27 @@ def hashtag():
 
 
 
+@router('/cutserv/text')
+def hashtag_text():
+    return json.dumps([tweet_text['text'] for tweet_text in twitter.tweet_search('#cutserv')])
+
+
+
 @router('/popular_tweets')
 def popular_tweets():
     return json.dumps(twitter.get_tweets())
 
 
 
+@router('/popular_tweets/text')
+def popular_tweets_text():
+    return json.dumps([tweet_text['text'] for tweet_text in twitter.get_tweets()])
+
+
+
 @router('/')
 def index():
-    return '''open /popular_tweets for tweets with like greater than 1 and /cutserv for tweets with hashtag cutserv'''
+    return '''open /popular_tweets for complete tweet information of tweets with like greater than 1 , /popular_tweets/text for text of tweets with like greater than 1 ,/cutserv for complete tweet info of tweets with hashtag cutserv, and /cutserv/text for tweets with hashtag cutserv'''
 
 
 
