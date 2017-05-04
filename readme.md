@@ -7,7 +7,7 @@ This project can perform the following functionality.
   - On opening route /popular_tweets , all tweets fetched from timeline and having atleast a single retweet would be displayed
   - On opening route /cutserv/text , all tweets with #cutserv will be visible
   - On opening route /popular_tweets/text , all tweets with #cutserv will be visible
-  - **Note** - This is a json endpoint with content-type json . To enable other content-type , server.Handler.response_handler(response_type="") for sending html documents. 
+  - **Note** - This is a json endpoint with content-type json . To enable other content-type , server.Handler.response_handler(response_type="") for sending html documents.
 
 
 ### Installation
@@ -66,7 +66,7 @@ def do_POST(self):
 To listen on a different port
 ```python
 #listens on post 8000
-server.web_server.run_server(PORT=8000)
+server.web_server.run_server(PORT=8000,HOST="0.0.0.0")
 ```
 
 The module tweet.twit contains class Twitter which extends class twitter.Api from module python-twitter
