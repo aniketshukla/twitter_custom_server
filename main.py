@@ -1,4 +1,5 @@
-'''root file of the project
+'''
+root file of the project
 uses module tweet and server
 tweet -> getting twitter samples for homefeed and searches tweet on the basis of hashtag
 server -> is a basic instance of basicHTTPserver nad extends to make serving get request easier
@@ -18,42 +19,65 @@ twitter=Twitter(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_TOKEN,
 
 @router('/')
 def main():
-    return ('{err:working}')
+    '''returns tweets with hashtag #cutserv'''
+    #return json.dumps(twitter.tweet_search('#cutserv'))
+    result=[]
+    for tweet in twitter.tweet_search('#cutserv'):
+        try:
+            tweet[u'user'][u'screen_name']=tweet[u'user'][u'screen_name'].decode('utf-8').encode('utf-8')
+            result.append(tweet)
+        except Exception as err:
+            1
+
+
+
+    return Server.render('index.html',data=result,title="#cutserv")
 
 
 
 @router('/cutserv')
 def hashtag():
     '''returns tweets with hashtag #cutserv'''
-    return json.dumps(twitter.tweet_search('#cutserv'))
+    #return json.dumps(twitter.tweet_search('#cutserv'))
+    result=[]
+    for tweet in twitter.tweet_search('#cutserv'):
+        '''Jinja template requires the data to be in UTF-8 format and some of the data sent by twitter
+        is not in UTF-8 format ,hence decoding and encoding it again sometimes fixes the problem'''
+        try:
+            tweet[u'user'][u'screen_name']=tweet[u'user'][u'screen_name'].decode('utf-8').encode('utf-8')
+            tweet[u'text']=tweet[u'text'].decode('utf-8').encode('utf-8')
+            try:
+                tweet[u'user'][u'retweeted_status'][u'user'][u'screen_name']=tweet[u'user'][u'retweeted_status'][u'user'][u'screen_name'].decode('utf-8').encode('utf-8')
+            except Exception as err:
+                1
+            result.append(tweet)
+        except Exception as err:
+            1
 
 
 
-@router('/cutserv/text')
-def hashtag_text():
-    '''returns just the text of tweets with hashtag #cutserv'''
-    return json.dumps([tweet_text['text'] for tweet_text in twitter.tweet_search('#cutserv')])
+    return Server.render('tweets.html',data=result,title="#cutserv")
 
 
 
 @router('/popular_tweets')
 def popular_tweets():
     '''returns tweets with atleast a single retweet'''
-    return json.dumps(twitter.get_tweets())
-
-
-
-@router('/popular_tweets/text')
-def popular_tweets_text():
-    '''returns text of tweets with atleast a singel retweet'''
-    return json.dumps([tweet_text['text'] for tweet_text in twitter.get_tweets()])
-
-
-
-@router('/')
-def index():
-    '''a summar of the entire application '''
-    return '''open /popular_tweets for complete tweet information of tweets with like greater than 1 , /popular_tweets/text for text of tweets with like greater than 1 ,/cutserv for complete tweet info of tweets with hashtag cutserv, and /cutserv/text for tweets with hashtag cutserv'''
+    result=[]
+    for tweet in twitter.get_tweets():
+        '''Jinja template requires the data to be in UTF-8 format and some of the data sent by twitter
+        is not in UTF-8 format ,hence decoding and encoding it again sometimes fixes the problem'''
+        try:
+            tweet[u'user'][u'screen_name']=tweet[u'user'][u'screen_name'].decode('utf-8').encode('utf-8')
+            tweet[u'text']=tweet[u'text'].decode('utf-8').encode('utf-8')
+            try:
+                tweet[u'user'][u'retweeted_status'][u'user'][u'screen_name']=tweet[u'user'][u'retweeted_status'][u'user'][u'screen_name'].decode('utf-8').encode('utf-8')
+            except Exception as err:
+                1
+            result.append(tweet)
+        except Exception as err:
+            1
+    return Server.render('tweets.html',data=result,title="Popular Tweets")
 
 
 

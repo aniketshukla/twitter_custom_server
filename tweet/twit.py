@@ -23,7 +23,7 @@ class Twitter(Api):
         '''gets tweet from homefeed'''
 
         filtered_tweets=[]
-        home_timeline=self.api.GetHomeTimeline()
+        home_timeline=self.api.GetHomeTimeline(count=200)
         for tweet in home_timeline:
             if tweet.retweet_count>0:
                 filtered_tweets.append(tweet.AsDict())

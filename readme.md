@@ -1,14 +1,10 @@
 # twitter
 
-
 This project can perform the following functionality.
 
   - On opening route /cutserv , all tweets with #cutserv will be visible along with their other twitter data
   - On opening route /popular_tweets , all tweets fetched from timeline and having atleast a single retweet would be displayed
-  - On opening route /cutserv/text , all tweets with #cutserv will be visible
-  - On opening route /popular_tweets/text , all tweets with #cutserv will be visible
   - **Note** - This is a json endpoint with content-type json . To enable other content-type , server.Handler.response_handler(response_type="") for sending html documents.
-
 
 ### Installation
 
@@ -31,7 +27,6 @@ After installation finishes,run the main.py file
 python main.py
 ```
 
-
 ### Adding your own functionality
 
 The requirements of this project are minimal , _hence using a full blown server and web framework is not required_.
@@ -44,9 +39,19 @@ from server.web_server import Server,router
 
 @router('/yourroute')
 def index():
-    return json result
-#note router is only used to return json or text based results as the content type is application/json
+    return Server.render('template_name.html',key=value,key=value)
 ```
+
+Above example returns a document based result,to return a JSON based result
+```python
+from server.web_server import Server,router
+
+@router('/yourroute')
+def index():
+    return Server.send_data({dict object})
+```
+
+To add your own template , _simply create an jinja2 html file in /public/templates/yournewtemplate.html_. Further documentation on jinja2 is available on http://jinja.pocoo.org/docs/2.9/.
 
 The following extends server to handle post request
 
@@ -107,6 +112,7 @@ def your_response_function():
 ```
 
 **twit**
+
 ```python
 #creates an instance object and authorises the keys
 twitter_object=tweet.twit.Twitter(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_TOKEN,

@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>Twitter</title>
+   <link href='/public/css/main.css' rel='stylesheet' type='text/css'>
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type='text/css'>
+
+</head>
+<body>
+		<span class="first">
+			{{title}}
+		</span>
+		<ul class="timeline" style="overflow-y: scroll;height: 100%;">
+      {% for tweet in data %}
+			<li style="padding-top: 5%;">
+				<div class="avatar">
+          <img src="{{tweet.user.profile_image_url}}">
+
+				</div>
+				<div class="bubble-container">
+						<h3>{{tweet.user.screen_name}}</h3> {% if tweet.retweeted_status %} retweeted <h3>@{{tweet.retweeted_status.user.screen_name}}</h3>{% endif %}<br/>
+            {{tweet.text}}
+          </div>
+          {% if tweet.media %}
+          <div class="image-container">
+            <img style="position: relative;height: 151px;padding: 12px;width: 163px;left: 28%;" src="{{tweet.media[0].media_url}}"/>
+          </div>
+          {% endif %}
+          <div style="left: 188px;position: relative;font-size: 16px;">
+            <i class="fa fa-retweet" aria-hidden="true"></i>{%if tweet.retweet_count %}{{tweet.retweet_count}}{% else %}0{%endif %}
+             <i class="fa fa-heart" aria-hidden="true"></i>{%if tweet.favorite_count %}{{tweet.favorite_count}}{% else %}0{%endif %}
+          </div>
+
+				</div>
+			</li>
+      {%endfor%}
+		</ul>
+
+	</div>
+</body>
+</html>
